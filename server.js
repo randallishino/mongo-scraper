@@ -41,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 app.use(express.static("views"));
+app.use(methodOverride("_method"));
 
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -60,35 +61,3 @@ app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
   });
 
-app.get("/scrape", function(req, res) {
-    // making http request to grab html
-    request("https://www.nytimes.com/", function(error, response, html) {
-      // saving info into cheerio
-    var $ = cheerio.load(html);
-      // looping over each article tag
-      $("article").each(function(i, element) {
-  
-        // Save an empty result object
-        var result = {};
-  
-        // saving all text into result object
-        result.title = $(this).children("h2").text();
-        result.summary = $(this).children(".summary").text();
-        result.link = $(this).children("h2").children("a").attr("href");
-  
-        // Using our Article model, create a new instance
-        var new_Article = new Article(result);
-  
-        // saving data into db using new instance
-        new_Article.save(function(err, res) {
-          // Log any errors
-          if (err) {
-            console.log(err);
-          }
-          else {
-            console.log(res);
-          }
-        });
-      })
-    });
-});

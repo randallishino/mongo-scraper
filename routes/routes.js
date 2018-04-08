@@ -16,7 +16,7 @@ module.exports = function(router) {
 		}
 
 		else{
-			res.render("home", {article: dbArticle} );
+			res.render("index", {article: dbArticle} );
 		}
 		});
 	})
