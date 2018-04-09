@@ -1,0 +1,32 @@
+body {
+    font-family: 'Ceviche One', cursive;
+}
+
+
+#link {
+    margin-top: 5px;
+}
+
+#panel-head {
+    margin-top: 40px;
+}
+
+#savedLink {
+    font-size: 25px;
+}
+
+#home {
+    font-size: 40px;
+}
+
+#saved {
+    font-size: 40px;
+}
+
+h1 {
+    font-size: 75px;
+}
+
+#article-button {
+    margin-left: 300px;
+}

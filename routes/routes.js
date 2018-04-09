@@ -7,22 +7,20 @@ var Note = require('../models/note.js');
 
 module.exports = function(router) {
 
+    // find all unsaved articles
 	router.get("/", function(req, res){
 		Article.find({
 			saved: false
 		}, function(err, dbArticle) {
 		if (err) {
 			res.send(err);
-		}
-
+        }
+        // save data into an object and render into handlebars
 		else{
 			res.render("index", {article: dbArticle} );
 		}
 		});
-	})
-
-
-
+	});
 
     router.get("/scrape", function(req, res) {
         // making http request to grab html
@@ -62,13 +60,14 @@ module.exports = function(router) {
 
 	// This route renders the saved handledbars page
   router.get("/saved", function(req, res) {
-  	// res.json('route hit')
-  	 Article.find({saved: true}).populate("notes", 'body').exec(function(err, dbArticle) {
+       Article.find({saved: true})
+       .populate("notes", 'body')
+       .exec(function(err, dbArticle) {
     if (err) {
       res.send(err);
     }
     else {
-      res.render("saved", {saved: dbArticle});
+      res.render("articles", {saved: dbArticle});
     }
   	});
   });
